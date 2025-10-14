@@ -83,80 +83,50 @@
 </body>
 </html>
 
-      /* style.css */
-#game-container {
-    width: 600px;
-    height: 200px;
-    border: 2px solid black;
-    margin: 50px auto;
-    overflow: hidden; /* Hide elements outside the container */
-    position: relative;
-}
 
-#dinosaur {
-    width: 50px;
-    height: 50px;
-    background-color: green; /* Or use an image */
+      <body>
+       /* style.css */
+       .game-contianer {position; realtive; 
+       width: 600px;
+       height: 200px;
+       border: 1px solid black;
+       overflow: hidden; /* Hide parts of elements outside the contianer */}
+
+
+
+.dino {
     position: absolute;
     bottom: 0;
     left: 50px;
+    width: 30px;
+    height: 50px;
+    background-color: blue; /* Replace with an image later */
 }
 
-#block {
-    width: 30px;
-    height: 60px;
-    background-color: red; /* Or use an image */
+.obstacle {
     position: absolute;
     bottom: 0;
-    right: -30px; /* Start off-screen */
-    animation: block-move 2s infinite linear; /* Move the block */}
-
-.jump {
-    animation: jump 0.6s ease-out forwards; /* Apply jump animation */}
+    right: 0;
+    width: 30px;
+    height: 30px;
+    background-color: green;
+    animation: moveBlock 1.5s infinite linear;
+}
 
 @keyframes jump {
     0% { bottom: 0; }
-    50% { bottom: 100px; } /* Max jump height */
+    50% { bottom: 150px; } /* Adjust height to control the jump height */
     100% { bottom: 0; }
-
-@keyframes block-move {
-    0% { right: -30px; }
-    100% { right: 600px; } /* Move across the screen */}
-
-      // script.js
-const dinosaur = document.getElementById('dinosaur');
-const block = document.getElementById('block');
-let isJumping = false;
-
-document.addEventListener('keydown', (event) => {
-    if (event.code === 'Space' && !isJumping) {
-        jump(); }
-});
-
-function jump() {
-    isJumping = true;
-    dinosaur.classList.add('jump');
-    setTimeout(() => {
-        dinosaur.classList.remove('jump');
-        isJumping = false;
-    }, 600); // Match jump animation duration}
-
-// Basic collision detection (simplified)
-function checkCollision() {
-    const dinoRect = dinosaur.getBoundingClientRect();
-    const blockRect = block.getBoundingClientRect();
-
-    if (
-        dinoRect.right > blockRect.left &&
-        dinoRect.left < blockRect.right &&
-        dinoRect.bottom > blockRect.top
-    ) {
-        alert('Game Over!');
-        location.reload(); // Restart the game}
 }
 
-// Game loop to continuously check for collisions
-setInterval(checkCollision, 10);
+@keyframes moveBlock {
+    0% { right: -30px; } /* Start off-screen */
+    100% { right: 100%; } /* Move across the screen */
+}
+
+.jump {
+    animation: jump 0.5s linear; /* Apply the jump animation */
+}
 
          
 
