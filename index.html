@@ -65,19 +65,100 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>My Game</h1>
-    <canvas id="gameCanvas" width="800" height="600"></canvas>
-    <div id="gameUI">
-        <p>Score: <span id="score">0</span></p>
-        <button id="startButton">Start Game</button>
+    
+       <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dino Jump</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="dinosaur"></div>
+        <div id="block"></div>
     </div>
-    <script src="game.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
-     <div class="game-container">
-  <div id="dino" class="dino"></div>
-  <div id="block" class="block"></div>
-</div>
+
+      /* style.css */
+#game-container {
+    width: 600px;
+    height: 200px;
+    border: 2px solid black;
+    margin: 50px auto;
+    overflow: hidden; /* Hide elements outside the container */
+    position: relative;
+}
+
+#dinosaur {
+    width: 50px;
+    height: 50px;
+    background-color: green; /* Or use an image */
+    position: absolute;
+    bottom: 0;
+    left: 50px;
+}
+
+#block {
+    width: 30px;
+    height: 60px;
+    background-color: red; /* Or use an image */
+    position: absolute;
+    bottom: 0;
+    right: -30px; /* Start off-screen */
+    animation: block-move 2s infinite linear; /* Move the block */}
+
+.jump {
+    animation: jump 0.6s ease-out forwards; /* Apply jump animation */}
+
+@keyframes jump {
+    0% { bottom: 0; }
+    50% { bottom: 100px; } /* Max jump height */
+    100% { bottom: 0; }
+
+@keyframes block-move {
+    0% { right: -30px; }
+    100% { right: 600px; } /* Move across the screen */}
+
+      // script.js
+const dinosaur = document.getElementById('dinosaur');
+const block = document.getElementById('block');
+let isJumping = false;
+
+document.addEventListener('keydown', (event) => {
+    if (event.code === 'Space' && !isJumping) {
+        jump(); }
+});
+
+function jump() {
+    isJumping = true;
+    dinosaur.classList.add('jump');
+    setTimeout(() => {
+        dinosaur.classList.remove('jump');
+        isJumping = false;
+    }, 600); // Match jump animation duration}
+
+// Basic collision detection (simplified)
+function checkCollision() {
+    const dinoRect = dinosaur.getBoundingClientRect();
+    const blockRect = block.getBoundingClientRect();
+
+    if (
+        dinoRect.right > blockRect.left &&
+        dinoRect.left < blockRect.right &&
+        dinoRect.bottom > blockRect.top
+    ) {
+        alert('Game Over!');
+        location.reload(); // Restart the game}
+}
+
+// Game loop to continuously check for collisions
+setInterval(checkCollision, 10);
+
+         
 
     
 
